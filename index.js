@@ -55,6 +55,13 @@ const run = async () => {
       response.status(200).send(result);
     });
 
+    app.get('/completed', async (request, response) => {
+      const result = await taskCollection
+        .find({ status: 'completed' })
+        .toArray();
+      response.status(200).send(result);
+    });
+
     /**
      * ! post method
      */
@@ -72,7 +79,7 @@ const run = async () => {
       const id = request.params.id;
       const query = { _id: new ObjectId(id) };
       const updatedDoc = {
-        $set: { status: 'ongoing' },
+        $set: { status: request.body.status },
       };
       const result = await taskCollection.updateOne(query, updatedDoc);
       response.status(200).send(result);
