@@ -69,7 +69,6 @@ const run = async () => {
      */
 
     app.patch('/tasks/:id', async (request, response) => {
-      console.log(request.body);
       const id = request.params.id;
       const query = { _id: new ObjectId(id) };
       const updatedDoc = {
