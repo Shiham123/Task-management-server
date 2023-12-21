@@ -85,6 +85,17 @@ const run = async () => {
       response.status(200).send(result);
     });
 
+    /**
+     * ! delete method
+     */
+
+    app.delete('/tasks/:id', async (request, response) => {
+      const id = request.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await taskCollection.deleteOne(query);
+      response.status(200).send(result);
+    });
+
     await client.db('admin').command({ ping: 1 });
     console.log('You successfully connected to MongoDB!');
   } catch (error) {
