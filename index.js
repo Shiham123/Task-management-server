@@ -27,6 +27,20 @@ const run = async () => {
     const taskDatabase = client.db('taskDB');
     const taskCollection = taskDatabase.collection('per-task');
 
+    /**
+     * ! get method
+     */
+
+    app.get('/tasks/:email', async (request, response) => {
+      const email = request.params.email;
+      const query = { loggedInUserEmail: email };
+      const result = await taskCollection.find(query).toArray();
+      response.status(200).send(result);
+    });
+
+    /**
+     * ! post method
+     */
     app.post('/tasks', async (request, response) => {
       const task = request.body;
       const result = await taskCollection.insertOne(task);
