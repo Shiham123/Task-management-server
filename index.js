@@ -26,6 +26,7 @@ const run = async () => {
     // await client.connect();
     const taskDatabase = client.db('taskDB');
     const taskCollection = taskDatabase.collection('per-task');
+    const userCollection = taskDatabase.collection('login-user');
 
     /**
      * ! get method
@@ -62,12 +63,23 @@ const run = async () => {
       response.status(200).send(result);
     });
 
+    app.get('/users', async (request, response) => {
+      const result = await userCollection.find().toArray();
+      response.status(200).send(result);
+    });
+
     /**
      * ! post method
      */
     app.post('/tasks', async (request, response) => {
       const task = request.body;
       const result = await taskCollection.insertOne(task);
+      response.status(200).send(result);
+    });
+
+    app.post('/users', async (request, response) => {
+      const users = request.body;
+      const result = await userCollection.insertOne(users);
       response.status(200).send(result);
     });
 
