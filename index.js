@@ -68,6 +68,13 @@ const run = async () => {
       response.status(200).send(result);
     });
 
+    app.get('/users/per/:email', async (request, response) => {
+      const email = request.params.email;
+      const query = { email: email };
+      const result = await userCollection.findOne(query);
+      response.status(200).send(result);
+    });
+
     /**
      * ! post method
      */
